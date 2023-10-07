@@ -1,1 +1,6 @@
 <p>banner-table works!</p>
+<banner-table
+    *ngIf="banners$ | async as banners"
+    [columnDefinition]="tableHeaders"
+    [tableData]="banners.data.entities"
+></banner-table>

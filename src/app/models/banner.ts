@@ -29,3 +29,10 @@ export interface BannerDto {
     active: boolean
     priority: number
 }
+
+export interface BannerResponseDto {
+    data: {
+        total: number
+        entities: BannerDto[]
+    }
+}

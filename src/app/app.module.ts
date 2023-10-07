@@ -9,12 +9,40 @@ import { AuthInterceptor } from './interceptors/authInterceptor.interceptor'
 import { BASE_URL } from './shared/utils/base-url'
 import { environment } from '../environments/environment'
 import { BannerTableComponent } from './pages/banner-table/banner-table.component'
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component'
 import { TableComponent } from './ui/table/table.component'
+import { MatTableModule } from '@angular/material/table'
+import { MatIconModule } from '@angular/material/icon'
+import { MatButtonModule } from '@angular/material/button'
+import { MatSortModule } from '@angular/material/sort'
+import { StoreModule } from '@ngrx/store'
+import { BannersStoreModule } from './store/banners-store.module'
+import { EffectsModule } from '@ngrx/effects'
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SearchComponent } from './ui/search/search.component'
 
 @NgModule({
-    declarations: [AppComponent, BannerTableComponent, LandingPageComponent, TableComponent],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, HttpClientModule],
+    declarations: [
+        AppComponent,
+        BannerTableComponent,
+        LandingPageComponent,
+        TableComponent,
+        SearchComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatTableModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSortModule,
+        BannersStoreModule,
+        StoreModule.forRoot({}, {}),
+        EffectsModule.forRoot([]),
+        MatSidenavModule,
+    ],
     providers: [
         {
             provide: BASE_URL,
