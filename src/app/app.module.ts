@@ -18,8 +18,11 @@ import { MatSortModule } from '@angular/material/sort'
 import { StoreModule } from '@ngrx/store'
 import { BannersStoreModule } from './store/banners-store.module'
 import { EffectsModule } from '@ngrx/effects'
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav'
 import { SearchComponent } from './ui/search/search.component'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input';
+import { BannerFormComponent } from './ui/banner-form/banner-form.component'
 
 @NgModule({
     declarations: [
@@ -28,6 +31,7 @@ import { SearchComponent } from './ui/search/search.component'
         LandingPageComponent,
         TableComponent,
         SearchComponent,
+        BannerFormComponent,
     ],
     imports: [
         BrowserModule,
@@ -38,6 +42,8 @@ import { SearchComponent } from './ui/search/search.component'
         MatIconModule,
         MatButtonModule,
         MatSortModule,
+        MatFormFieldModule,
+        MatInputModule,
         BannersStoreModule,
         StoreModule.forRoot({}, {}),
         EffectsModule.forRoot([]),

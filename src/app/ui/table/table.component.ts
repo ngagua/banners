@@ -1,8 +1,10 @@
-import { Component, Input, ViewChild } from '@angular/core'
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core'
 import { MatTableDataSource } from '@angular/material/table'
 import { MatSort, Sort } from '@angular/material/sort'
 import { LiveAnnouncer } from '@angular/cdk/a11y'
-import { TableHeaders } from '../../models/table'
+import { ActionsPayload, TableHeaders } from '../../models/table'
+import { Actions } from '../../models/enum'
+import { BannerDto } from '../../models/banner'
 
 @Component({
     selector: 'banner-table',
@@ -11,11 +13,14 @@ import { TableHeaders } from '../../models/table'
 })
 export class TableComponent {
     @Input({ required: true }) columnDefinition: TableHeaders[] = []
-    @Input({ required: true }) tableData: any[] | undefined
+    @Input({ required: true }) tableData: BannerDto[] | undefined
 
-    dataSource: MatTableDataSource<any>
+    @Output() readonly actionCalled = new EventEmitter<ActionsPayload>()
+
+    dataSource: MatTableDataSource<BannerDto>
     mappedTableData: string[] = []
     clickedRowID = 0
+    actions = Actions
 
     constructor(private _liveAnnouncer: LiveAnnouncer) {
         this.dataSource = new MatTableDataSource([]) as any
@@ -46,5 +51,9 @@ export class TableComponent {
 
     select(element: any) {
         this.clickedRowID = element.id
+    }
+
+    performAction(action: Actions, banner: BannerDto) {
+        this.actionCalled.emit({ action, banner })
     }
 }

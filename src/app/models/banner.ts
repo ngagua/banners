@@ -36,3 +36,12 @@ export interface BannerResponseDto {
         entities: BannerDto[]
     }
 }
+
+export interface BannerSingleResponse {
+    data: BannerDto
+    success: boolean
+}
+
+export interface deleteBannerResponse {
+    success: boolean
+}

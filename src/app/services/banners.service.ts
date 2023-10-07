@@ -2,7 +2,12 @@ import { Inject, Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
 import { BASE_URL } from '../shared/utils/base-url'
-import { BannerResponseDto, BannersFindDto } from '../models/banner'
+import {
+    BannerResponseDto,
+    BannersFindDto,
+    BannerSingleResponse,
+    deleteBannerResponse,
+} from '../models/banner'
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +19,19 @@ export class BannersService {
     ) {}
 
     getBanners(body: BannersFindDto) {
-        console.log(`${this.baseUrl}/banners/find`)
         return this.http.post<BannerResponseDto>(`${this.baseUrl}/banners/find`, body)
+    }
+
+    getSingleBanner(body: BannersFindDto) {
+        return this.http.post<BannerSingleResponse>(
+            `${this.baseUrl}/banners/find-one`,
+            body
+        )
+    }
+
+    removeBanner(id: string) {
+        return this.http.post<deleteBannerResponse>(`${this.baseUrl}/banners/remove`, {
+            id,
+        })
     }
 }

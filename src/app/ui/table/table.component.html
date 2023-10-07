@@ -10,11 +10,21 @@
             <mat-header-cell *matHeaderCellDef class=""> Action</mat-header-cell>
             <mat-cell *matCellDef="let element" class="">
                 <div class="">
-                    <ng-container>
-                        <button>
-                            <mat-icon class="material-icons-outlined">edit</mat-icon>
-                        </button>
-                    </ng-container>
+                    <button>
+                        <mat-icon
+                            (click)="performAction(actions.EDIT, element)"
+                            class="material-icons-outlined"
+                            >edit
+                        </mat-icon>
+                    </button>
+                    <button>
+                        <mat-icon
+                            (click)="performAction(actions.DELETE, element)"
+                            class="material-icons-outlined"
+                        >
+                            remove
+                        </mat-icon>
+                    </button>
                 </div>
             </mat-cell>
         </ng-container>

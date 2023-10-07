@@ -7,6 +7,11 @@ export const selectBannersForTable = createSelector(
     selectBannersState,
     (state: BannersState) => state.banners
 )
+
+export const selectSingleBanner = createSelector(
+    selectBannersState,
+    (state: BannersState) => state.banners
+)
 export const selectBannersError = createSelector(
     selectBannersState,
     (state: BannersState) => state.error

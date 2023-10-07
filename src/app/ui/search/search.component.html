@@ -1,0 +1,19 @@
+<mat-form-field appearance="outline" class="search">
+    <input
+        #activitySearchInput
+        class="!text-base"
+        matInput
+        placeholder="Search"
+        type="text"
+    />
+    <mat-icon matPrefix> search</mat-icon>
+    <mat-icon
+        (click)="clearSearchInput()"
+        *ngIf="searchControl.value"
+        aria-label="Clear"
+        class="cursor-pointer"
+        matSuffix
+    >
+        close_rounded
+    </mat-icon>
+</mat-form-field>

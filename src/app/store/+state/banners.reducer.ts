@@ -1,13 +1,14 @@
 import { Action, createReducer, on } from '@ngrx/store'
 import { BannersActions } from './banners.actions'
-import { BannerResponseDto } from '../../models/banner'
+import { BannerResponseDto, BannerSingleResponse } from '../../models/banner'
 
 export const BANNERS_FEATURE_KEY = 'banners'
 
 export interface BannersState {
-    banners: BannerResponseDto | undefined
+    banners?: BannerResponseDto | undefined
     loaded: boolean
     error?: string | null
+    selectedBanner?: BannerSingleResponse
 }
 
 export interface BannersPartialState {
@@ -16,25 +17,41 @@ export interface BannersPartialState {
 
 export const initialBannersState: BannersState = {
     banners: undefined,
+    selectedBanner: undefined,
     loaded: true,
     error: null,
 }
 
 const reducer = createReducer(
     initialBannersState,
-    on(BannersActions.loadBanners, (state) => ({
-        ...state,
-        loaded: false,
-        error: null,
-    })),
+    on(
+        BannersActions.loadBanners,
+        BannersActions.loadSingleBanner,
+        BannersActions.deleteBanner,
+        (state) => ({
+            ...state,
+            loaded: false,
+            error: null,
+        })
+    ),
+    on(
+        BannersActions.loadBannersFailure,
+        BannersActions.loadSingleBannerFailure,
+        BannersActions.deleteBannerFailure,
+        (state, { error }) => ({
+            ...state,
+            error,
+            loaded: true,
+        })
+    ),
     on(BannersActions.loadBannersSuccess, (state, action) => ({
         ...state,
         banners: action.banners,
         loaded: true,
     })),
-    on(BannersActions.loadBannersFailure, (state, { error }) => ({
+    on(BannersActions.loadSingleBannerSuccess, (state, action) => ({
         ...state,
-        error,
+        selectedBanner: action.selectedBanner,
         loaded: true,
     }))
 )
