@@ -11,3 +11,10 @@ export interface ActionsPayload {
     action: Actions
     pagination?: { pageIndex: number; size: number }
 }
+
+export interface PaginationModel {
+    length: number
+    pageIndex: number
+    pageSize: number
+    previousPageIndex?: number
+}

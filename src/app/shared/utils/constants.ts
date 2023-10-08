@@ -4,14 +4,11 @@ import { FindReferenceDataDto } from '../../models/reference-data'
 
 export const tableHeaders: TableHeaders[] = [
     {
-        id: 'filed',
+        id: 'fileId',
         label: 'Filed',
     },
     { id: 'name', label: 'Name' },
-    // { id: 'channelId', label: 'Channel ID' },
-    // { id: 'id', label: 'ID' },
     { id: 'active', label: 'Active' },
-    // { id: 'zoneId', label: 'Zone ID' },
     { id: 'startDate', label: 'Start Date' },
     { id: 'endDate', label: 'End Date' },
     { id: 'labels', label: 'Labels' },
@@ -19,7 +16,7 @@ export const tableHeaders: TableHeaders[] = [
 
 export const bannerFields: BannersFindDto = {
     pageSize: 10,
-    pageIndex: 1,
+    pageIndex: 0,
     includes: [
         'filed',
         'name',
@@ -30,10 +27,16 @@ export const bannerFields: BannersFindDto = {
         'startDate',
         'endDate',
         'labels',
+        'fileId',
+        'url',
+        'language',
+        'priority',
     ],
 }
 
 export const ReferenceDataBody: FindReferenceDataDto = {
     typeIds: ['1600', '1700', '1900', '2900'],
     includes: ['id', 'name', 'typeId', 'key'],
+    pageSize: 100,
+    pageIndex: 0,
 }

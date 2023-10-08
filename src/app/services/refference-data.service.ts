@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
 import { BASE_URL } from '../shared/utils/base-url'
-import { FindReferenceDataDto, ReferenceDataItemDto } from '../models/reference-data'
+import { FindReferenceDataDto, ReferenceDataResponseDto } from '../models/reference-data'
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +14,7 @@ export class ReferenceDataService {
     ) {}
 
     getReferenceData(body: FindReferenceDataDto) {
-        return this.http.post<ReferenceDataItemDto>(
+        return this.http.post<ReferenceDataResponseDto>(
             `${this.baseUrl}/reference-data/find`,
             body
         )

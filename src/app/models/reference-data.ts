@@ -21,6 +21,14 @@ export interface FindReferenceDataDto {
     searchAfter?: string[]
 }
 
+export interface ReferenceDataResponseDto {
+    success: boolean
+    data: {
+        entities: ReferenceDataItemDto[]
+        total: number
+    }
+}
+
 export interface ReferenceDataItemDto {
     parentId: string
     path: string

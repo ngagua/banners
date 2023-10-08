@@ -21,8 +21,16 @@ import { EffectsModule } from '@ngrx/effects'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { SearchComponent } from './ui/search/search.component'
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input'
 import { BannerFormComponent } from './ui/banner-form/banner-form.component'
+import { ReactiveFormsModule } from '@angular/forms'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatNativeDateModule } from '@angular/material/core'
+import { MatSelectModule } from '@angular/material/select'
+import { BannerContentPipe } from './pipes/baner-content.pipe'
+import { DatePipe } from '@angular/common'
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 @NgModule({
     declarations: [
@@ -32,6 +40,7 @@ import { BannerFormComponent } from './ui/banner-form/banner-form.component'
         TableComponent,
         SearchComponent,
         BannerFormComponent,
+        BannerContentPipe,
     ],
     imports: [
         BrowserModule,
@@ -44,12 +53,19 @@ import { BannerFormComponent } from './ui/banner-form/banner-form.component'
         MatSortModule,
         MatFormFieldModule,
         MatInputModule,
+        MatSlideToggleModule,
+        MatDatepickerModule,
+        MatSidenavModule,
+        MatNativeDateModule,
         BannersStoreModule,
         StoreModule.forRoot({}, {}),
         EffectsModule.forRoot([]),
-        MatSidenavModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatPaginatorModule,
     ],
     providers: [
+        DatePipe,
         {
             provide: BASE_URL,
             useValue: environment.apiBaseUrl,

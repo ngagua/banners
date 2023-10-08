@@ -1,6 +1,7 @@
 <mat-form-field appearance="outline" class="search">
     <input
         #activitySearchInput
+        [formControl]="searchControl"
         class="!text-base"
         matInput
         placeholder="Search"

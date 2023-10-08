@@ -14,13 +14,13 @@
                         (click)="performAction(actions.EDIT, element)"
                         mat-icon-button
                     >
-                        <mat-icon class="material-icons-outlined">edit </mat-icon>
+                        <mat-icon class="material-icons-outlined">edit</mat-icon>
                     </button>
                     <button
                         (click)="performAction(actions.DELETE, element)"
                         mat-icon-button
                     >
-                        <mat-icon class="material-icons-outlined"> delete </mat-icon>
+                        <mat-icon class="material-icons-outlined"> delete</mat-icon>
                     </button>
                 </div>
             </mat-cell>
@@ -58,3 +58,14 @@
         class=""
     ></mat-row>
 </mat-table>
+
+<mat-paginator
+    #paginator
+    (page)="handlePageEvent($event)"
+    [length]="length"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize"
+    [showFirstLastButtons]="true"
+>
+</mat-paginator>

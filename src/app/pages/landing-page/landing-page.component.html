@@ -1,5 +1,10 @@
 <mat-drawer-container>
-    <mat-drawer [position]="'end'" mode="side" opened>
+    <mat-drawer
+        [opened]="drawerService.getShowDrawer"
+        [position]="'end'"
+        class="drawer"
+        mode="side"
+    >
         banner form
         <banner-form></banner-form>
     </mat-drawer>

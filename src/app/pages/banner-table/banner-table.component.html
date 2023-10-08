@@ -1,17 +1,19 @@
 <div class="container">
     <div class="header">
         <h1>Banner</h1>
-        <button color="primary" mat-flat-button>
+        <button (click)="createBanner()" color="primary" mat-flat-button>
             <mat-icon class="material-icons-outlined">account_circle</mat-icon>
             <span>Create new banner</span>
         </button>
     </div>
-    <banner-search></banner-search>
+    <banner-search (searchFilter)="handleSearch($event)"></banner-search>
 
     <banner-table
         (actionCalled)="handleTableAction($event)"
+        (paginationCalled)="handlePagination($event)"
         *ngIf="banners$ | async as banners"
         [columnDefinition]="tableHeaders"
-        [tableData]="banners.data.entities"
+        [length]="banners.data.total"
+        [tableData]="banners.data.entities | bannerContent"
     ></banner-table>
 </div>

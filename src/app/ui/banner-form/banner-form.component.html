@@ -1,3 +1,109 @@
-<ng-container *ngIf="banner$ | async as banner">
-    <div class="">{{ banner?.data?.id }}</div>
-</ng-container>
+<form [formGroup]="form">
+    <ng-container *ngIf="referenceData$ | async as data">
+        <div class="container">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input formControlName="name" matInput placeholder="Name" required />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Priority</mat-label>
+                <input
+                    formControlName="priority"
+                    matInput
+                    min="0"
+                    placeholder="Priority"
+                    required
+                    type="number"
+                />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Zone</mat-label>
+                <mat-select formControlName="zoneId" required>
+                    <mat-option *ngFor="let zone of zoneOptions" [value]="zone.key">
+                        {{ zone.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Start Date</mat-label>
+                <input
+                    [matDatepicker]="picker1"
+                    [min]="today()"
+                    formControlName="startDate"
+                    matInput
+                    placeholder="mm/dd/yyyy"
+                    required
+                />
+                <mat-datepicker-toggle [for]="picker1" matSuffix>
+                    <mat-icon matDatepickerToggleIcon> calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>End Date</mat-label>
+                <input
+                    [matDatepicker]="picker2"
+                    [min]="today()"
+                    formControlName="endDate"
+                    matInput
+                    placeholder="mm/dd/yyyy"
+                    required
+                />
+                <mat-datepicker-toggle [for]="picker2" matSuffix>
+                    <mat-icon matDatepickerToggleIcon> calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Channel</mat-label>
+
+                <mat-select formControlName="channelId" required>
+                    <mat-option
+                        *ngFor="let channel of channelOptions"
+                        [value]="channel.key"
+                    >
+                        {{ channel.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Language</mat-label>
+                <mat-select formControlName="language" required>
+                    <mat-option
+                        *ngFor="let language of languageOptions"
+                        [value]="language.key"
+                    >
+                        {{ language.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Labels</mat-label>
+
+                <mat-select formControlName="labels" multiple>
+                    <mat-option *ngFor="let label of labelOptions" [value]="label.key">
+                        {{ label.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-slide-toggle formControlName="active">active</mat-slide-toggle>
+            <div class="buttons">
+                <button (click)="cancel()" color="accent" mat-raised-button>
+                    Cancel
+                </button>
+                <button
+                    (click)="save()"
+                    [disabled]="form.invalid"
+                    color="primary"
+                    mat-raised-button
+                >
+                    Save
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</form>

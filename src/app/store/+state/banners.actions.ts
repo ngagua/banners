@@ -8,7 +8,10 @@ import {
     BannerSingleResponse,
     deleteBannerResponse,
 } from '../../models/banner'
-import { FindReferenceDataDto, ReferenceDataItemDto } from '../../models/reference-data'
+import {
+    FindReferenceDataDto,
+    ReferenceDataResponseDto,
+} from '../../models/reference-data'
 
 export const BannersActions = createActionGroup({
     source: '[Banners/API]',
@@ -21,7 +24,7 @@ export const BannersActions = createActionGroup({
         'Load Single Banner Success': props<{ selectedBanner: BannerSingleResponse }>(),
         'Load Single Banner Failure': props<{ error: string }>(),
 
-        'Save Banner': props<{ body: BannerSaveDto }>(),
+        'Save Banner': props<{ banner: BannerSaveDto; body: BannersFindDto }>(),
         'Save Banner Success': props<{ response: BannerEntity }>(),
         'Save Banner Failure': props<{ error: string }>(),
 
@@ -37,7 +40,7 @@ export const ReferenceDataActions = createActionGroup({
     source: '[Reference/API]',
     events: {
         'Load Reference Data': props<{ body: FindReferenceDataDto }>(),
-        'Load Reference Data Success': props<{ data: ReferenceDataItemDto }>(),
+        'Load Reference Data Success': props<{ data: ReferenceDataResponseDto }>(),
         'Load Reference Data Failure': props<{ error: string }>(),
     },
 })

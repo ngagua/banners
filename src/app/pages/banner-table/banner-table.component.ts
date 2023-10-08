@@ -1,17 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core'
-import { ActionsPayload } from '../../models/table'
+import { ActionsPayload, PaginationModel } from '../../models/table'
 import { BannersActions, ReferenceDataActions } from '../../store/+state/banners.actions'
 import { Store } from '@ngrx/store'
-import {
-    selectBannersForTable,
-    selectSingleBanner,
-} from '../../store/+state/banners.selectors'
+import { selectBannersForTable } from '../../store/+state/banners.selectors'
 import { Actions } from '../../models/enum'
 import {
     bannerFields,
     ReferenceDataBody,
     tableHeaders,
 } from '../../shared/utils/constants'
+import { DrawerService } from '../../services/drawer.service'
 
 @Component({
     selector: 'app-banner-table',
@@ -20,13 +18,15 @@ import {
 })
 export class BannerTableComponent implements OnInit {
     store = inject(Store)
+    drawerService = inject(DrawerService)
 
     tableHeaders = tableHeaders
     bannerFields = bannerFields
     referenceDataBody = ReferenceDataBody
 
+    searchValue = ''
+
     banners$ = this.store.select(selectBannersForTable)
-    selectedBanner$ = this.store.select(selectSingleBanner)
 
     ngOnInit(): void {
         this.store.dispatch(BannersActions.loadBanners({ body: this.bannerFields }))
@@ -36,7 +36,6 @@ export class BannerTableComponent implements OnInit {
     }
 
     handleTableAction(payload: ActionsPayload) {
-        console.log('payload', payload.action)
         if (payload.action === Actions.DELETE) {
             this.store.dispatch(
                 BannersActions.deleteBanner({
@@ -51,6 +50,37 @@ export class BannerTableComponent implements OnInit {
                     body: { includes: this.bannerFields.includes, id: payload.banner.id },
                 })
             )
+            this.drawerService.setShowDrawer = true
         }
+    }
+
+    handleSearch(value: string) {
+        this.searchValue = value
+        this.store.dispatch(
+            BannersActions.loadBanners({
+                body: {
+                    ...this.bannerFields,
+                    search: value,
+                },
+            })
+        )
+    }
+
+    handlePagination(paginator: PaginationModel) {
+        this.store.dispatch(
+            BannersActions.loadBanners({
+                body: {
+                    ...this.bannerFields,
+                    pageIndex: paginator.pageIndex,
+                    pageSize: paginator.pageSize,
+                    search: this.searchValue,
+                },
+            })
+        )
+    }
+
+    createBanner() {
+        this.store.dispatch(BannersActions.clearSelectedBanner())
+        this.drawerService.setShowDrawer = true
     }
 }

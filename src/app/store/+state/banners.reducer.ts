@@ -10,7 +10,7 @@ export interface BannersState {
     loaded: boolean
     error?: string | null
     selectedBanner?: BannerSingleResponse
-    referenceData?: ReferenceDataItemDto
+    referenceData?: ReferenceDataItemDto[]
 }
 
 export interface BannersPartialState {
@@ -71,7 +71,7 @@ const reducer = createReducer(
     })),
     on(ReferenceDataActions.loadReferenceDataSuccess, (state, action) => ({
         ...state,
-        referenceData: action.data,
+        referenceData: action.data.data.entities,
         loaded: true,
     }))
 )

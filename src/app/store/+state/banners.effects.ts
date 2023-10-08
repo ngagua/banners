@@ -67,12 +67,10 @@ export class BannersEffects {
     saveBanner$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BannersActions.saveBanner),
-            switchMap(({ body }) => {
+            switchMap(({ banner, body }) => {
                 return this.bannersService
-                    .saveBanner(body)
-                    .pipe(
-                        map((response) => BannersActions.saveBannerSuccess({ response }))
-                    )
+                    .saveBanner(banner)
+                    .pipe(map((response) => BannersActions.loadBanners({ body })))
             }),
             catchError((error) => {
                 console.error('Error', error)
