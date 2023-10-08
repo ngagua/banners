@@ -11,6 +11,7 @@ export interface BannersState {
     loaded: boolean
     error?: string | null
     file?: FileUploadResponse
+    downloadedFile?: Blob
     selectedBanner?: BannerSingleResponse
     referenceData?: ReferenceDataItemDto[]
 }
@@ -36,6 +37,7 @@ const reducer = createReducer(
         BannersActions.saveBanner,
         BannersActions.deleteBanner,
         FileActions.uploadFile,
+        FileActions.downloadFile,
         ReferenceDataActions.loadReferenceData,
         (state) => ({
             ...state,
@@ -49,6 +51,7 @@ const reducer = createReducer(
         BannersActions.saveBannerFailure,
         BannersActions.deleteBannerFailure,
         FileActions.uploadFileFailure,
+        FileActions.downloadFileFailure,
         ReferenceDataActions.loadReferenceDataFailure,
         (state, { error }) => ({
             ...state,
@@ -79,13 +82,14 @@ const reducer = createReducer(
         referenceData: action.data.data.entities,
         loaded: true,
     })),
-    on(FileActions.uploadFileSuccess, (state, action) => {
-        console.log('action', action.data)
-        return {
-            ...state,
-            file: action.data.data,
-        }
-    }),
+    on(FileActions.uploadFileSuccess, (state, action) => ({
+        ...state,
+        file: action.data.data,
+    })),
+    on(FileActions.downloadFileSuccess, (state, action) => ({
+        ...state,
+        downloadedFile: action.file,
+    })),
     on(FileActions.clearFile, (state, action) => ({
         ...state,
         file: undefined,

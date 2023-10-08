@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http'
 
 import { BASE_URL } from '../shared/utils/base-url'
 import { FileResponse } from '../models/file'
-import { catchError } from 'rxjs'
 
 @Injectable({
     providedIn: 'root',
@@ -22,12 +21,6 @@ export class FileService {
     }
 
     downloadFile(id: string) {
-        console.log('id', id)
-        return this.http.get(`${this.baseUrl}/blob/${id}`, { responseType: 'blob' }).pipe(
-            catchError((error: any) => {
-                console.error('Error fetching image:', error)
-                throw error
-            })
-        )
+        return this.http.get(`${this.baseUrl}/blob/${id}`, { responseType: 'blob' })
     }
 }

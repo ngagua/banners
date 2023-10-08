@@ -13,6 +13,11 @@ export const selectFile = createSelector(
     (state: BannersState) => state.file
 )
 
+export const selectDownloadedFile = createSelector(
+    selectBannersState,
+    (state: BannersState) => state.downloadedFile
+)
+
 export const selectSingleBanner = createSelector(
     selectBannersState,
     (state: BannersState) => state.selectedBanner

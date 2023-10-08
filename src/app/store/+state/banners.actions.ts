@@ -53,6 +53,10 @@ export const FileActions = createActionGroup({
         'Upload File Success': props<{ data: FileResponse }>(),
         'Upload File Failure': props<{ error: string }>(),
 
+        'Download File': props<{ id: string }>(),
+        'Download File Success': props<{ file: Blob }>(),
+        'Download File Failure': props<{ error: string }>(),
+
         'Clear File': emptyProps,
     },
 })

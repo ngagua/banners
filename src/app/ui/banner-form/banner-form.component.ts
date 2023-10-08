@@ -2,6 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import {
+    selectDownloadedFile,
     selectFile,
     selectReferenceData,
     selectSingleBanner,
@@ -13,7 +14,6 @@ import { BannersActions, FileActions } from '../../store/+state/banners.actions'
 import { BannerSaveDto } from '../../models/banner'
 import { bannerFields } from 'src/app/shared/utils/constants'
 import { DomSanitizer } from '@angular/platform-browser'
-import { FileService } from '../../services/file.service'
 
 @Component({
     selector: 'banner-form',
@@ -24,12 +24,12 @@ export class BannerFormComponent implements OnInit, OnDestroy {
     store = inject(Store)
     fb = inject(FormBuilder)
     drawerService = inject(DrawerService)
-    fileService = inject(FileService)
     sanitizer = inject(DomSanitizer)
 
     referenceData$ = this.store.select(selectReferenceData)
     banner$ = this.store.select(selectSingleBanner)
     file$ = this.store.select(selectFile)
+    downloadedFile$ = this.store.select(selectDownloadedFile)
     endSubs$ = new Subject<void>()
 
     bannerFields = bannerFields
@@ -62,12 +62,16 @@ export class BannerFormComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.banner$.pipe(takeUntil(this.endSubs$)).subscribe((banner) => {
             if (banner) {
-                this.fileService.downloadFile(banner.data.fileId).subscribe((file) => {
-                    const imageUrl = this.sanitizer.bypassSecurityTrustUrl(
-                        URL.createObjectURL(file)
-                    )
-                    this.imageControl.patchValue(imageUrl)
+                this.store.dispatch(FileActions.downloadFile({ id: banner.data.fileId }))
+                this.downloadedFile$.pipe(takeUntil(this.endSubs$)).subscribe((file) => {
+                    if (file) {
+                        const imageUrl = this.sanitizer.bypassSecurityTrustUrl(
+                            URL.createObjectURL(file)
+                        )
+                        this.imageControl.patchValue(imageUrl)
+                    }
                 })
+
                 this.form.patchValue(banner.data)
             } else {
                 this.imageControl.reset()

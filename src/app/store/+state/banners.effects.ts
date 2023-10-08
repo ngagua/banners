@@ -97,6 +97,21 @@ export class BannersEffects {
 
     uploadFile$ = createEffect(() =>
         this.actions$.pipe(
+            ofType(FileActions.downloadFile),
+            switchMap(({ id }) => {
+                return this.fileService
+                    .downloadFile(id)
+                    .pipe(map((file) => FileActions.downloadFileSuccess({ file })))
+            }),
+            catchError((error) => {
+                console.error('Error', error)
+                return of(FileActions.uploadFileFailure({ error }))
+            })
+        )
+    )
+
+    downloadFile$ = createEffect(() =>
+        this.actions$.pipe(
             ofType(FileActions.uploadFile),
             switchMap(({ body }) => {
                 return this.fileService
@@ -105,7 +120,7 @@ export class BannersEffects {
             }),
             catchError((error) => {
                 console.error('Error', error)
-                return of(FileActions.uploadFileFailure({ error }))
+                return of(FileActions.downloadFileFailure({ error }))
             })
         )
     )
