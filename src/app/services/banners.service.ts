@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http'
 
 import { BASE_URL } from '../shared/utils/base-url'
 import {
+    BannerEntity,
     BannerResponseDto,
+    BannerSaveDto,
     BannersFindDto,
     BannerSingleResponse,
     deleteBannerResponse,
@@ -33,5 +35,9 @@ export class BannersService {
         return this.http.post<deleteBannerResponse>(`${this.baseUrl}/banners/remove`, {
             id,
         })
+    }
+
+    saveBanner(body: BannerSaveDto) {
+        return this.http.post<BannerEntity>(`${this.baseUrl}/banners/save`, body)
     }
 }

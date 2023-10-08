@@ -4,7 +4,7 @@ import { MatSort, Sort } from '@angular/material/sort'
 import { LiveAnnouncer } from '@angular/cdk/a11y'
 import { ActionsPayload, TableHeaders } from '../../models/table'
 import { Actions } from '../../models/enum'
-import { BannerDto } from '../../models/banner'
+import { BannerEntity } from '../../models/banner'
 
 @Component({
     selector: 'banner-table',
@@ -13,11 +13,11 @@ import { BannerDto } from '../../models/banner'
 })
 export class TableComponent {
     @Input({ required: true }) columnDefinition: TableHeaders[] = []
-    @Input({ required: true }) tableData: BannerDto[] | undefined
+    @Input({ required: true }) tableData: BannerEntity[] | undefined
 
     @Output() readonly actionCalled = new EventEmitter<ActionsPayload>()
 
-    dataSource: MatTableDataSource<BannerDto>
+    dataSource: MatTableDataSource<BannerEntity>
     mappedTableData: string[] = []
     clickedRowID = 0
     actions = Actions
@@ -38,7 +38,6 @@ export class TableComponent {
             })
         this.dataSource.data = this.tableData || []
         this.mappedTableData = this.columnDefinition.map((column) => column.id)
-        console.log(this.tableData)
     }
 
     announceSortChange(sortData: Sort) {
@@ -53,7 +52,7 @@ export class TableComponent {
         this.clickedRowID = element.id
     }
 
-    performAction(action: Actions, banner: BannerDto) {
+    performAction(action: Actions, banner: BannerEntity) {
         this.actionCalled.emit({ action, banner })
     }
 }

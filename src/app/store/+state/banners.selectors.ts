@@ -10,7 +10,7 @@ export const selectBannersForTable = createSelector(
 
 export const selectSingleBanner = createSelector(
     selectBannersState,
-    (state: BannersState) => state.banners
+    (state: BannersState) => state.selectedBanner
 )
 export const selectBannersError = createSelector(
     selectBannersState,

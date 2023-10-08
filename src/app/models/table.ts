@@ -1,4 +1,4 @@
-import { BannerDto } from './banner'
+import { BannerEntity } from './banner'
 import { Actions } from './enum'
 
 export interface TableHeaders {
@@ -7,7 +7,7 @@ export interface TableHeaders {
 }
 
 export interface ActionsPayload {
-    banner: BannerDto
+    banner: BannerEntity
     action: Actions
     pagination?: { pageIndex: number; size: number }
 }

@@ -9,21 +9,18 @@
         <ng-container *ngIf="column.id === 'CRUD_OPERATION'">
             <mat-header-cell *matHeaderCellDef class=""> Action</mat-header-cell>
             <mat-cell *matCellDef="let element" class="">
-                <div class="">
-                    <button>
-                        <mat-icon
-                            (click)="performAction(actions.EDIT, element)"
-                            class="material-icons-outlined"
-                            >edit
-                        </mat-icon>
+                <div class="buttons">
+                    <button
+                        (click)="performAction(actions.EDIT, element)"
+                        mat-icon-button
+                    >
+                        <mat-icon class="material-icons-outlined">edit </mat-icon>
                     </button>
-                    <button>
-                        <mat-icon
-                            (click)="performAction(actions.DELETE, element)"
-                            class="material-icons-outlined"
-                        >
-                            remove
-                        </mat-icon>
+                    <button
+                        (click)="performAction(actions.DELETE, element)"
+                        mat-icon-button
+                    >
+                        <mat-icon class="material-icons-outlined"> delete </mat-icon>
                     </button>
                 </div>
             </mat-cell>

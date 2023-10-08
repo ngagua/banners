@@ -13,7 +13,13 @@ export interface BannersFindDto {
     searchAfter?: string[]
 }
 
-export interface BannerDto {
+export interface BannerFindOneDto {
+    id: string
+    includes?: string[]
+    excludes?: string[]
+}
+
+export interface BannerEntity {
     id: string
     name: string
     isCorporate: true
@@ -33,15 +39,31 @@ export interface BannerDto {
 export interface BannerResponseDto {
     data: {
         total: number
-        entities: BannerDto[]
+        entities: BannerEntity[]
     }
 }
 
 export interface BannerSingleResponse {
-    data: BannerDto
+    data: BannerEntity
     success: boolean
 }
 
 export interface deleteBannerResponse {
     success: boolean
+}
+
+export interface BannerSaveDto {
+    id: string
+    name: string
+    isCorporate: boolean
+    channelId: string
+    fileId: string
+    language: string
+    zoneId: string
+    startDate: string
+    endDate: string
+    url: string
+    active: boolean
+    priority: number
+    labels: string[]
 }

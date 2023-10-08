@@ -1,1 +1,3 @@
-<p>banner-form works!</p>
+<ng-container *ngIf="banner$ | async as banner">
+    <div class="">{{ banner?.data?.id }}</div>
+</ng-container>

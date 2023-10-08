@@ -45,6 +45,23 @@ export class BannersEffects {
         )
     )
 
+    saveBanner$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(BannersActions.saveBanner),
+            switchMap(({ body }) => {
+                return this.bannersService
+                    .saveBanner(body)
+                    .pipe(
+                        map((response) => BannersActions.saveBannerSuccess({ response }))
+                    )
+            }),
+            catchError((error) => {
+                console.error('Error', error)
+                return of(BannersActions.deleteBannerFailure({ error }))
+            })
+        )
+    )
+
     deleteBanner$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BannersActions.deleteBanner),

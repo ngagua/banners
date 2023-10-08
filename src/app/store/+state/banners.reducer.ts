@@ -27,6 +27,7 @@ const reducer = createReducer(
     on(
         BannersActions.loadBanners,
         BannersActions.loadSingleBanner,
+        BannersActions.saveBanner,
         BannersActions.deleteBanner,
         (state) => ({
             ...state,
@@ -37,6 +38,7 @@ const reducer = createReducer(
     on(
         BannersActions.loadBannersFailure,
         BannersActions.loadSingleBannerFailure,
+        BannersActions.saveBannerFailure,
         BannersActions.deleteBannerFailure,
         (state, { error }) => ({
             ...state,
@@ -47,6 +49,10 @@ const reducer = createReducer(
     on(BannersActions.loadBannersSuccess, (state, action) => ({
         ...state,
         banners: action.banners,
+        loaded: true,
+    })),
+    on(BannersActions.saveBannerSuccess, (state, action) => ({
+        ...state,
         loaded: true,
     })),
     on(BannersActions.loadSingleBannerSuccess, (state, action) => ({
