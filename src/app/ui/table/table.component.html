@@ -1,71 +1,75 @@
-<mat-table
-    (matSortChange)="announceSortChange($event)"
-    [dataSource]="dataSource"
-    class=""
-    matSort
-    multiTemplateDataRows
->
-    <ng-container *ngFor="let column of columnDefinition" [matColumnDef]="column.id">
-        <ng-container *ngIf="column.id === 'CRUD_OPERATION'">
-            <mat-header-cell *matHeaderCellDef class=""> Action</mat-header-cell>
-            <mat-cell *matCellDef="let element" class="">
-                <div class="buttons">
-                    <button
-                        (click)="performAction(actions.EDIT, element)"
-                        mat-icon-button
-                    >
-                        <mat-icon class="material-icons-outlined">edit</mat-icon>
-                    </button>
-                    <button
-                        (click)="performAction(actions.DELETE, element)"
-                        mat-icon-button
-                    >
-                        <mat-icon class="material-icons-outlined"> delete</mat-icon>
-                    </button>
-                </div>
-            </mat-cell>
-        </ng-container>
-        <ng-container>
-            <ng-container>
-                <mat-header-cell
-                    *matHeaderCellDef
-                    class="flex w-full justify-center gap-0.5 !border-none"
-                    mat-sort-header
-                    sortActionDescription="Sort by {{ column.label }}"
-                >
-                    {{ column.label }}
-                </mat-header-cell>
+<div class="container">
+    <mat-table
+        (matSortChange)="announceSortChange($event)"
+        [dataSource]="dataSource"
+        class="table"
+        matSort
+        multiTemplateDataRows
+    >
+        <ng-container *ngFor="let column of columnDefinition" [matColumnDef]="column.id">
+            <ng-container *ngIf="column.id === 'CRUD_OPERATION'">
+                <mat-header-cell *matHeaderCellDef class=""> Action</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="">
+                    <div class="buttons">
+                        <button
+                            (click)="performAction(actions.EDIT, element)"
+                            mat-icon-button
+                        >
+                            <mat-icon class="material-icons-outlined">edit</mat-icon>
+                        </button>
+                        <button
+                            (click)="performAction(actions.DELETE, element)"
+                            mat-icon-button
+                        >
+                            <mat-icon class="material-icons-outlined"> delete</mat-icon>
+                        </button>
+                    </div>
+                </mat-cell>
             </ng-container>
+            <ng-container>
+                <ng-container>
+                    <mat-header-cell
+                        *matHeaderCellDef
+                        class="flex w-full justify-center gap-0.5 !border-none"
+                        mat-sort-header
+                        sortActionDescription="Sort by {{ column.label }}"
+                    >
+                        {{ column.label }}
+                    </mat-header-cell>
+                </ng-container>
 
-            <mat-cell
-                *matCellDef="let element"
-                class="flex w-full justify-center gap-0.5 !border-none"
-            >
-                {{ element[column.id] }}
-            </mat-cell>
+                <mat-cell
+                    *matCellDef="let element"
+                    class="flex w-full justify-center gap-0.5 !border-none"
+                >
+                    {{ element[column.id] }}
+                </mat-cell>
+            </ng-container>
         </ng-container>
-    </ng-container>
 
-    <ng-container>
-        <mat-header-row *matHeaderRowDef="mappedTableData; sticky: true"></mat-header-row>
-    </ng-container>
-    <mat-row
-        (click)="select(row)"
-        *matRowDef="let row; columns: mappedTableData; let i = dataIndex"
-        [ngClass]="{
-            'selected-row': clickedRowID === row.id
-        }"
-        class=""
-    ></mat-row>
-</mat-table>
+        <ng-container>
+            <mat-header-row
+                *matHeaderRowDef="mappedTableData; sticky: true"
+            ></mat-header-row>
+        </ng-container>
+        <mat-row
+            (click)="select(row)"
+            *matRowDef="let row; columns: mappedTableData; let i = dataIndex"
+            [ngClass]="{
+                'selected-row': clickedRowID === row.id
+            }"
+            class=""
+        ></mat-row>
+    </mat-table>
 
-<mat-paginator
-    #paginator
-    (page)="handlePageEvent($event)"
-    [length]="length"
-    [pageIndex]="pageIndex"
-    [pageSizeOptions]="pageSizeOptions"
-    [pageSize]="pageSize"
-    [showFirstLastButtons]="true"
->
-</mat-paginator>
+    <mat-paginator
+        #paginator
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="pageSize"
+        [showFirstLastButtons]="true"
+    >
+    </mat-paginator>
+</div>

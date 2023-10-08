@@ -8,6 +8,11 @@ export const selectBannersForTable = createSelector(
     (state: BannersState) => state.banners
 )
 
+export const selectFile = createSelector(
+    selectBannersState,
+    (state: BannersState) => state.file
+)
+
 export const selectSingleBanner = createSelector(
     selectBannersState,
     (state: BannersState) => state.selectedBanner

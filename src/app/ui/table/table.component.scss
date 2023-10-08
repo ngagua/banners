@@ -5,3 +5,13 @@
 }
 
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+
+  .table {
+    flex-grow: 1;
+  }
+}

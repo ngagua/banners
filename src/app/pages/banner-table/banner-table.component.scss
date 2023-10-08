@@ -1,5 +1,8 @@
 .container {
   padding: 2rem;
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
 
   .header {
     display: flex;
@@ -8,4 +11,8 @@
     gap: 1rem;
     margin-bottom: 1rem;
   }
+}
+
+.banner-table {
+  flex-grow: 1;
 }

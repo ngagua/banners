@@ -1,14 +1,16 @@
 import { inject, Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { catchError, map, of, switchMap } from 'rxjs'
-import { BannersActions, ReferenceDataActions } from './banners.actions'
+import { BannersActions, FileActions, ReferenceDataActions } from './banners.actions'
 import { BannersService } from '../../services/banners.service'
 import { ReferenceDataService } from '../../services/refference-data.service'
+import { FileService } from '../../services/file.service'
 
 @Injectable()
 export class BannersEffects {
     referenceDataService = inject(ReferenceDataService)
     bannersService = inject(BannersService)
+    fileService = inject(FileService)
     private actions$ = inject(Actions)
 
     loadReferenceData$ = createEffect(() =>
@@ -89,6 +91,21 @@ export class BannersEffects {
             catchError((error) => {
                 console.error('Error', error)
                 return of(BannersActions.deleteBannerFailure({ error }))
+            })
+        )
+    )
+
+    uploadFile$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(FileActions.uploadFile),
+            switchMap(({ body }) => {
+                return this.fileService
+                    .uploadFile(body)
+                    .pipe(map((data) => FileActions.uploadFileSuccess({ data })))
+            }),
+            catchError((error) => {
+                console.error('Error', error)
+                return of(FileActions.uploadFileFailure({ error }))
             })
         )
     )

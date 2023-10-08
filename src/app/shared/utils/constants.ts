@@ -5,7 +5,7 @@ import { FindReferenceDataDto } from '../../models/reference-data'
 export const tableHeaders: TableHeaders[] = [
     {
         id: 'fileId',
-        label: 'Filed',
+        label: 'FileId',
     },
     { id: 'name', label: 'Name' },
     { id: 'active', label: 'Active' },

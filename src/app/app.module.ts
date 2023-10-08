@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { isDevMode, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
 import { AppRoutingModule } from './app-routing.module'
@@ -31,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select'
 import { BannerContentPipe } from './pipes/baner-content.pipe'
 import { DatePipe } from '@angular/common'
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
 @NgModule({
     declarations: [
@@ -58,11 +59,21 @@ import { MatPaginatorModule } from '@angular/material/paginator'
         MatSidenavModule,
         MatNativeDateModule,
         BannersStoreModule,
-        StoreModule.forRoot({}, {}),
+        StoreModule.forRoot(
+            {},
+            {
+                runtimeChecks: {
+                    strictStateImmutability: true,
+                    strictActionImmutability: true,
+                    strictActionTypeUniqueness: true,
+                },
+            }
+        ),
         EffectsModule.forRoot([]),
         ReactiveFormsModule,
         MatSelectModule,
         MatPaginatorModule,
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     ],
     providers: [
         DatePipe,

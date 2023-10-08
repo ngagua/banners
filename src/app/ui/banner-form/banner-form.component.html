@@ -1,6 +1,7 @@
 <form [formGroup]="form">
     <ng-container *ngIf="referenceData$ | async as data">
         <div class="container">
+            <h1>Banner form</h1>
             <mat-form-field appearance="outline">
                 <mat-label>Name</mat-label>
                 <input formControlName="name" matInput placeholder="Name" required />
@@ -25,6 +26,39 @@
                 <mat-select formControlName="zoneId" required>
                     <mat-option *ngFor="let zone of zoneOptions" [value]="zone.key">
                         {{ zone.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Channel</mat-label>
+
+                <mat-select formControlName="channelId" required>
+                    <mat-option
+                        *ngFor="let channel of channelOptions"
+                        [value]="channel.key"
+                    >
+                        {{ channel.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Language</mat-label>
+                <mat-select formControlName="language" required>
+                    <mat-option
+                        *ngFor="let language of languageOptions"
+                        [value]="language.key"
+                    >
+                        {{ language.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Labels</mat-label>
+
+                <mat-select formControlName="labels" multiple>
+                    <mat-option *ngFor="let label of labelOptions" [value]="label.key">
+                        {{ label.name }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -61,40 +95,19 @@
                 <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Channel</mat-label>
-
-                <mat-select formControlName="channelId" required>
-                    <mat-option
-                        *ngFor="let channel of channelOptions"
-                        [value]="channel.key"
-                    >
-                        {{ channel.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Language</mat-label>
-                <mat-select formControlName="language" required>
-                    <mat-option
-                        *ngFor="let language of languageOptions"
-                        [value]="language.key"
-                    >
-                        {{ language.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Labels</mat-label>
-
-                <mat-select formControlName="labels" multiple>
-                    <mat-option *ngFor="let label of labelOptions" [value]="label.key">
-                        {{ label.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
             <mat-slide-toggle formControlName="active">active</mat-slide-toggle>
+
+            <img
+                *ngIf="imageControl?.value"
+                [src]="imageControl.value"
+                alt="Uploaded Image"
+            />
+            <input
+                type="file"
+                (change)="onFileSelected($event)"
+                placeholder="Choose file"
+                class="file-upload"
+            />
             <div class="buttons">
                 <button (click)="cancel()" color="accent" mat-raised-button>
                     Cancel

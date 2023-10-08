@@ -12,6 +12,7 @@ import {
     FindReferenceDataDto,
     ReferenceDataResponseDto,
 } from '../../models/reference-data'
+import { FileResponse } from '../../models/file'
 
 export const BannersActions = createActionGroup({
     source: '[Banners/API]',
@@ -42,5 +43,16 @@ export const ReferenceDataActions = createActionGroup({
         'Load Reference Data': props<{ body: FindReferenceDataDto }>(),
         'Load Reference Data Success': props<{ data: ReferenceDataResponseDto }>(),
         'Load Reference Data Failure': props<{ error: string }>(),
+    },
+})
+
+export const FileActions = createActionGroup({
+    source: '[File/API]',
+    events: {
+        'Upload File': props<{ body: Blob }>(),
+        'Upload File Success': props<{ data: FileResponse }>(),
+        'Upload File Failure': props<{ error: string }>(),
+
+        'Clear File': emptyProps,
     },
 })

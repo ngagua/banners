@@ -1,7 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store'
-import { BannersActions, ReferenceDataActions } from './banners.actions'
+import { BannersActions, FileActions, ReferenceDataActions } from './banners.actions'
 import { BannerResponseDto, BannerSingleResponse } from '../../models/banner'
 import { ReferenceDataItemDto } from '../../models/reference-data'
+import { FileUploadResponse } from '../../models/file'
 
 export const BANNERS_FEATURE_KEY = 'banners'
 
@@ -9,6 +10,7 @@ export interface BannersState {
     banners?: BannerResponseDto | undefined
     loaded: boolean
     error?: string | null
+    file?: FileUploadResponse
     selectedBanner?: BannerSingleResponse
     referenceData?: ReferenceDataItemDto[]
 }
@@ -21,6 +23,7 @@ export const initialBannersState: BannersState = {
     banners: undefined,
     selectedBanner: undefined,
     referenceData: undefined,
+    file: undefined,
     loaded: true,
     error: null,
 }
@@ -32,6 +35,7 @@ const reducer = createReducer(
         BannersActions.loadSingleBanner,
         BannersActions.saveBanner,
         BannersActions.deleteBanner,
+        FileActions.uploadFile,
         ReferenceDataActions.loadReferenceData,
         (state) => ({
             ...state,
@@ -44,6 +48,7 @@ const reducer = createReducer(
         BannersActions.loadSingleBannerFailure,
         BannersActions.saveBannerFailure,
         BannersActions.deleteBannerFailure,
+        FileActions.uploadFileFailure,
         ReferenceDataActions.loadReferenceDataFailure,
         (state, { error }) => ({
             ...state,
@@ -73,6 +78,17 @@ const reducer = createReducer(
         ...state,
         referenceData: action.data.data.entities,
         loaded: true,
+    })),
+    on(FileActions.uploadFileSuccess, (state, action) => {
+        console.log('action', action.data)
+        return {
+            ...state,
+            file: action.data.data,
+        }
+    }),
+    on(FileActions.clearFile, (state, action) => ({
+        ...state,
+        file: undefined,
     }))
 )
 
