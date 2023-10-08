@@ -58,6 +58,8 @@ export class BannerFormComponent implements OnInit, OnDestroy {
             if (banner) {
                 this.id = banner.data.id
                 this.form.patchValue(banner.data)
+            } else {
+                this.form.reset()
             }
         })
         this.referenceData$.pipe(takeUntil(this.endSubs$)).subscribe((data) => {
