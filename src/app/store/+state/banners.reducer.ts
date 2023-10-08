@@ -1,6 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store'
-import { BannersActions } from './banners.actions'
+import { BannersActions, ReferenceDataActions } from './banners.actions'
 import { BannerResponseDto, BannerSingleResponse } from '../../models/banner'
+import { ReferenceDataItemDto } from '../../models/reference-data'
 
 export const BANNERS_FEATURE_KEY = 'banners'
 
@@ -9,6 +10,7 @@ export interface BannersState {
     loaded: boolean
     error?: string | null
     selectedBanner?: BannerSingleResponse
+    referenceData?: ReferenceDataItemDto
 }
 
 export interface BannersPartialState {
@@ -18,6 +20,7 @@ export interface BannersPartialState {
 export const initialBannersState: BannersState = {
     banners: undefined,
     selectedBanner: undefined,
+    referenceData: undefined,
     loaded: true,
     error: null,
 }
@@ -29,6 +32,7 @@ const reducer = createReducer(
         BannersActions.loadSingleBanner,
         BannersActions.saveBanner,
         BannersActions.deleteBanner,
+        ReferenceDataActions.loadReferenceData,
         (state) => ({
             ...state,
             loaded: false,
@@ -40,6 +44,7 @@ const reducer = createReducer(
         BannersActions.loadSingleBannerFailure,
         BannersActions.saveBannerFailure,
         BannersActions.deleteBannerFailure,
+        ReferenceDataActions.loadReferenceDataFailure,
         (state, { error }) => ({
             ...state,
             error,
@@ -58,6 +63,15 @@ const reducer = createReducer(
     on(BannersActions.loadSingleBannerSuccess, (state, action) => ({
         ...state,
         selectedBanner: action.selectedBanner,
+        loaded: true,
+    })),
+    on(BannersActions.clearSelectedBanner, (state, action) => ({
+        ...state,
+        selectedBanner: undefined,
+    })),
+    on(ReferenceDataActions.loadReferenceDataSuccess, (state, action) => ({
+        ...state,
+        referenceData: action.data,
         loaded: true,
     }))
 )

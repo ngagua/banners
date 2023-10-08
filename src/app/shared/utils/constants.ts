@@ -1,5 +1,6 @@
 import { TableHeaders } from '../../models/table'
 import { BannersFindDto } from '../../models/banner'
+import { FindReferenceDataDto } from '../../models/reference-data'
 
 export const tableHeaders: TableHeaders[] = [
     {
@@ -30,4 +31,9 @@ export const bannerFields: BannersFindDto = {
         'endDate',
         'labels',
     ],
+}
+
+export const ReferenceDataBody: FindReferenceDataDto = {
+    typeIds: ['1600', '1700', '1900', '2900'],
+    includes: ['id', 'name', 'typeId', 'key'],
 }

@@ -1,13 +1,34 @@
 import { inject, Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { catchError, map, of, switchMap } from 'rxjs'
-import { BannersActions } from './banners.actions'
+import { BannersActions, ReferenceDataActions } from './banners.actions'
 import { BannersService } from '../../services/banners.service'
+import { ReferenceDataService } from '../../services/refference-data.service'
 
 @Injectable()
 export class BannersEffects {
+    referenceDataService = inject(ReferenceDataService)
+    bannersService = inject(BannersService)
     private actions$ = inject(Actions)
-    private bannersService = inject(BannersService)
+
+    loadReferenceData$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReferenceDataActions.loadReferenceData),
+            switchMap(({ body }) => {
+                return this.referenceDataService
+                    .getReferenceData(body)
+                    .pipe(
+                        map((data) =>
+                            ReferenceDataActions.loadReferenceDataSuccess({ data })
+                        )
+                    )
+            }),
+            catchError((error) => {
+                console.error('Error', error)
+                return of(ReferenceDataActions.loadReferenceDataFailure({ error }))
+            })
+        )
+    )
 
     loadBanners$ = createEffect(() =>
         this.actions$.pipe(
@@ -25,7 +46,6 @@ export class BannersEffects {
             })
         )
     )
-
     loadSingleBanner$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BannersActions.loadSingleBanner),
@@ -44,7 +64,6 @@ export class BannersEffects {
             })
         )
     )
-
     saveBanner$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BannersActions.saveBanner),
@@ -61,7 +80,6 @@ export class BannersEffects {
             })
         )
     )
-
     deleteBanner$ = createEffect(() =>
         this.actions$.pipe(
             ofType(BannersActions.deleteBanner),

@@ -12,6 +12,11 @@ export const selectSingleBanner = createSelector(
     selectBannersState,
     (state: BannersState) => state.selectedBanner
 )
+
+export const selectReferenceData = createSelector(
+    selectBannersState,
+    (state: BannersState) => state.referenceData
+)
 export const selectBannersError = createSelector(
     selectBannersState,
     (state: BannersState) => state.error

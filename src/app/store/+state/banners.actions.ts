@@ -1,4 +1,4 @@
-import { createActionGroup, props } from '@ngrx/store'
+import { createActionGroup, emptyProps, props } from '@ngrx/store'
 import {
     BannerEntity,
     BannerFindOneDto,
@@ -8,6 +8,7 @@ import {
     BannerSingleResponse,
     deleteBannerResponse,
 } from '../../models/banner'
+import { FindReferenceDataDto, ReferenceDataItemDto } from '../../models/reference-data'
 
 export const BannersActions = createActionGroup({
     source: '[Banners/API]',
@@ -27,5 +28,16 @@ export const BannersActions = createActionGroup({
         'Delete Banner': props<{ id: string; body: BannersFindDto }>(),
         'Delete Banner Success': props<{ response: deleteBannerResponse }>(),
         'Delete Banner Failure': props<{ error: string }>(),
+
+        'Clear Selected Banner': emptyProps,
+    },
+})
+
+export const ReferenceDataActions = createActionGroup({
+    source: '[Reference/API]',
+    events: {
+        'Load Reference Data': props<{ body: FindReferenceDataDto }>(),
+        'Load Reference Data Success': props<{ data: ReferenceDataItemDto }>(),
+        'Load Reference Data Failure': props<{ error: string }>(),
     },
 })
