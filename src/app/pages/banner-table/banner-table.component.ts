@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core'
 import { ActionsPayload, PaginationModel } from '../../models/table'
 import { BannersActions, ReferenceDataActions } from '../../store/+state/banners.actions'
 import { Store } from '@ngrx/store'
-import { selectBannersForTable } from '../../store/+state/banners.selectors'
+import { selectBannersForTable, selectLoaded } from '../../store/+state/banners.selectors'
 import { Actions } from '../../models/enum'
 import {
     bannerFields,
@@ -25,7 +25,9 @@ export class BannerTableComponent implements OnInit {
     referenceDataBody = ReferenceDataBody
 
     searchValue = ''
+    pagination: PaginationModel = { pageIndex: 0, pageSize: 10 }
 
+    loaded$ = this.store.select(selectLoaded)
     banners$ = this.store.select(selectBannersForTable)
 
     ngOnInit(): void {
@@ -40,7 +42,11 @@ export class BannerTableComponent implements OnInit {
             this.store.dispatch(
                 BannersActions.deleteBanner({
                     id: payload.banner.id,
-                    body: this.bannerFields,
+                    body: {
+                        ...this.bannerFields,
+                        search: this.searchValue,
+                        ...this.pagination,
+                    },
                 })
             )
         }
@@ -61,12 +67,15 @@ export class BannerTableComponent implements OnInit {
                 body: {
                     ...this.bannerFields,
                     search: value,
+                    pageIndex: this.pagination.pageIndex,
+                    pageSize: this.pagination.pageSize,
                 },
             })
         )
     }
 
     handlePagination(paginator: PaginationModel) {
+        this.pagination = paginator
         this.store.dispatch(
             BannersActions.loadBanners({
                 body: {

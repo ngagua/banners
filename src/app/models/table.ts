@@ -13,7 +13,7 @@ export interface ActionsPayload {
 }
 
 export interface PaginationModel {
-    length: number
+    length?: number
     pageIndex: number
     pageSize: number
     previousPageIndex?: number

@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core'
 import { DrawerService } from '../../services/drawer.service'
+import { Store } from '@ngrx/store'
 
 @Component({
     selector: 'app-landing-page',
@@ -8,4 +9,5 @@ import { DrawerService } from '../../services/drawer.service'
 })
 export class LandingPageComponent {
     drawerService = inject(DrawerService)
+    store = inject(Store)
 }

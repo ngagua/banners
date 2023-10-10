@@ -30,7 +30,7 @@
                 <ng-container>
                     <mat-header-cell
                         *matHeaderCellDef
-                        class="flex w-full justify-center gap-0.5 !border-none"
+                        class=""
                         mat-sort-header
                         sortActionDescription="Sort by {{ column.label }}"
                     >
@@ -38,10 +38,7 @@
                     </mat-header-cell>
                 </ng-container>
 
-                <mat-cell
-                    *matCellDef="let element"
-                    class="flex w-full justify-center gap-0.5 !border-none"
-                >
+                <mat-cell *matCellDef="let element" class="">
                     {{ element[column.id] }}
                 </mat-cell>
             </ng-container>
@@ -50,13 +47,15 @@
         <ng-container>
             <mat-header-row
                 *matHeaderRowDef="mappedTableData; sticky: true"
+                class="!z-0"
             ></mat-header-row>
         </ng-container>
         <mat-row
             (click)="select(row)"
             *matRowDef="let row; columns: mappedTableData; let i = dataIndex"
             [ngClass]="{
-                'selected-row': clickedRowID === row.id
+                'selected-row': clickedRowID === row.id,
+                '!bg-neutral-100': i % 2 === 0
             }"
             class=""
         ></mat-row>

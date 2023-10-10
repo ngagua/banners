@@ -18,3 +18,7 @@
         class="banner-table"
     ></banner-table>
 </div>
+<loader
+    *ngIf="(loaded$ | async) === false"
+    class="fixed left-0 top-0 h-screen w-full"
+></loader>

@@ -62,7 +62,7 @@ export class BannerFormComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.banner$.pipe(takeUntil(this.endSubs$)).subscribe((banner) => {
             if (banner) {
-                this.store.dispatch(FileActions.downloadFile({ id: banner.data.fileId }))
+                // this.store.dispatch(FileActions.downloadFile({ id: banner.data.fileId }))
                 this.downloadedFile$.pipe(takeUntil(this.endSubs$)).subscribe((file) => {
                     if (file) {
                         const imageUrl = this.sanitizer.bypassSecurityTrustUrl(

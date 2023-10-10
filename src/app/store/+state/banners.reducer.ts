@@ -85,10 +85,12 @@ const reducer = createReducer(
     on(FileActions.uploadFileSuccess, (state, action) => ({
         ...state,
         file: action.data.data,
+        loaded: true,
     })),
     on(FileActions.downloadFileSuccess, (state, action) => ({
         ...state,
         downloadedFile: action.file,
+        loaded: true,
     })),
     on(FileActions.clearFile, (state, action) => ({
         ...state,

@@ -32,6 +32,8 @@ import { BannerContentPipe } from './pipes/baner-content.pipe'
 import { DatePipe } from '@angular/common'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { LoaderComponent } from './ui/loader/loader.component'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @NgModule({
     declarations: [
@@ -42,6 +44,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
         SearchComponent,
         BannerFormComponent,
         BannerContentPipe,
+        LoaderComponent,
     ],
     imports: [
         BrowserModule,
@@ -74,6 +77,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
         MatSelectModule,
         MatPaginatorModule,
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+        MatProgressSpinnerModule,
     ],
     providers: [
         DatePipe,
